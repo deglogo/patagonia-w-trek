@@ -857,7 +857,7 @@ export default function App() {
   const daysToDeparture = calculateDaysUntil('2026-12-25');
   const daysToTrek = calculateDaysUntil('2027-01-29');
 
-  // Privacy check helper: Can the currently active viewer see full logs of `targetMember`?
+  // Privacy check helper: Can the currently active viewer see full logs of 'targetMember'?
   const canViewFullDetails = (targetMember) => {
     if (targetMember.id === activeMemberId) return true; // Always see your own full details
     return targetMember.privacyMode === 'full';
