@@ -574,7 +574,7 @@ export default function App() {
   const [members, setMembers] = useState(() => {
     if (!isFirebaseConfigured && typeof window !== 'undefined') {
       try {
-        const saved = window.localStorage.getItem(`${EXPEDITION_ID}_members`);
+        const saved = window.localStorage.getItem(EXPEDITION_ID + '_members');
         if (saved) return JSON.parse(saved);
       } catch (_) {}
     }
