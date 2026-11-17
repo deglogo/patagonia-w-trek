@@ -655,9 +655,9 @@ export default function App() {
   useEffect(() => {
     if (isFirebaseConfigured || typeof window === 'undefined') return;
     try {
-      window.localStorage.setItem(`${EXPEDITION_ID}_members`, JSON.stringify(members));
-      window.localStorage.setItem(`${EXPEDITION_ID}_workouts`, JSON.stringify(workouts));
-      window.localStorage.setItem(`${EXPEDITION_ID}_checklists`, JSON.stringify(checkedSessions));
+      window.localStorage.setItem('${EXPEDITION_ID}_members', JSON.stringify(members));
+      window.localStorage.setItem('${EXPEDITION_ID}_workouts', JSON.stringify(workouts));
+      window.localStorage.setItem('${EXPEDITION_ID}_checklists', JSON.stringify(checkedSessions));
     } catch (_) {}
   }, [members, workouts, checkedSessions]);
 
