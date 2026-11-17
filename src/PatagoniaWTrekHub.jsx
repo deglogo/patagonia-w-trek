@@ -584,7 +584,7 @@ export default function App() {
   const [workouts, setWorkouts] = useState(() => {
     if (!isFirebaseConfigured && typeof window !== 'undefined') {
       try {
-        const saved = window.localStorage.getItem(`${EXPEDITION_ID}_workouts`);
+        const saved = window.localStorage.getItem(EXPEDITION_ID + '_workouts');
         if (saved) return JSON.parse(saved);
       } catch (_) {}
     }
@@ -594,7 +594,7 @@ export default function App() {
   const [checkedSessions, setCheckedSessions] = useState(() => {
     if (!isFirebaseConfigured && typeof window !== 'undefined') {
       try {
-        const saved = window.localStorage.getItem(`${EXPEDITION_ID}_checklists`);
+        const saved = window.localStorage.getItem('${EXPEDITION_ID}_checklists');
         if (saved) return JSON.parse(saved);
       } catch (_) {}
     }
