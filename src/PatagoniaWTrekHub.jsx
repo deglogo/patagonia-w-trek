@@ -769,7 +769,7 @@ export default function App() {
     e.preventDefault();
     const payload = {
       ...formState,
-      title: formState.title.trim() || `${formState.type} Session`,
+      title: formState.title.trim() || '${formState.type} Session',
       durationMins: Number(formState.durationMins) || 0,
       distanceMiles: Number(formState.distanceMiles) || 0,
       elevationFt: Number(formState.elevationFt) || 0,
