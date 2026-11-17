@@ -779,7 +779,7 @@ export default function App() {
     };
 
     if (!isFirebaseConfigured || !db || !user) {
-      setWorkouts((prev) => [{ id: `local-${Date.now()}`, ...payload }, ...prev]);
+      setWorkouts((prev) => [{ id: 'local-${Date.now()}', ...payload }, ...prev]);
       setShowLogModal(false);
       showToast('Workout saved locally (Demo Mode)!');
       return;
@@ -793,7 +793,7 @@ export default function App() {
     } catch (err) {
       console.error('Failed to save workout:', err);
       showToast('Error saving workout. Please try again.');
-    }
+    } 
   };
 
   const handleDeleteWorkout = async (workoutId) => {
