@@ -757,4 +757,281 @@ export default function PatagoniaWTrekHub() {
                 </div>
               </div>
 
-              <div className="bg-white rounded-2xl border border-
+                              return (
+                  <div
+                    key={w.id}
+                    className="bg-white rounded-2xl border border-slate-200 p-4 flex items-start justify-between gap-3"
+                  >
+                    <div className="flex items-start gap-3">
+                      <div
+                        className={
+                          'w-9 h-9 rounded-full text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5 ' +
+                          owner.avatarColor
+                        }
+                      >
+                        {owner.name.slice(0, 1)}
+                      </div>
+                      <div>
+                        <div className="flex flex-wrap items-center gap-1.5">
+                          <span className="font-bold text-sm text-slate-900">
+                            {owner.name}
+                          </span>
+                          <span className="text-xs text-slate-400">•</span>
+                          <span className="text-xs font-semibold text-teal-700">
+                            {w.title}
+                          </span>
+                          {(w.isPrivate || owner.privateMode) && (
+                            <span className="inline-flex items-center gap-0.5 text-[10px] font-semibold px-1.5 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-200">
+                              <Lock className="w-2.5 h-2.5" />
+                              Private
+                            </span>
+                          )}
+                        </div>
+
+                        <div className="flex flex-wrap items-center gap-3 text-xs text-slate-600 mt-1.5">
+                          <span>{w.date}</span>
+                          <span>•</span>
+                          <span className="font-medium">
+                            {w.distanceMiles} mi
+                          </span>
+                          <span>•</span>
+                          <span className="font-medium">
+                            +{w.elevationFt} ft
+                          </span>
+                          <span>•</span>
+                          <span>{w.durationMins} min</span>
+                          {Number(w.packWeightLbs) > 0 && (
+                            <>
+                              <span>•</span>
+                              <span className="text-slate-500">
+                                {w.packWeightLbs} lb pack
+                              </span>
+                            </>
+                          )}
+                        </div>
+
+                        {w.notes && (
+                          <p className="text-xs text-slate-500 mt-2 bg-slate-50 p-2 rounded-lg border border-slate-100">
+                            {w.notes}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+
+                    {canDelete && (
+                      <button
+                        onClick={() => handleDeleteWorkout(w.id)}
+                        title="Delete workout"
+                        className="text-slate-400 hover:text-rose-600 p-1.5 rounded-lg transition cursor-pointer"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    )}
+                  </div>
+                );
+              })
+            )}
+          </div>
+        )}
+      </main>
+
+      {/* Log Workout Modal */}
+      {showLogModal && (
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-4">
+          <div className="bg-white w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl border border-slate-200 shadow-xl overflow-hidden">
+            <div className="px-4 py-3.5 bg-slate-900 text-white flex items-center justify-between">
+              <h3 className="font-bold text-sm">Log Training Session</h3>
+              <button
+                onClick={() => setShowLogModal(false)}
+                className="text-slate-400 hover:text-white cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleAddWorkout} className="p-4 space-y-3.5">
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    Hiker
+                  </label>
+                  <select
+                    value={formState.memberId}
+                    onChange={(e) =>
+                      setFormState({ ...formState, memberId: e.target.value })
+                    }
+                    className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm bg-white"
+                  >
+                    {members.map((m) => (
+                      <option key={m.id} value={m.id}>
+                        {m.name} ({m.age})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    Session Type
+                  </label>
+                  <select
+                    value={formState.type}
+                    onChange={(e) =>
+                      setFormState({ ...formState, type: e.target.value })
+                    }
+                    className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm bg-white"
+                  >
+                    <option value="Treadmill Incline">Treadmill Incline</option>
+                    <option value="Outdoor Hike">Outdoor Hike</option>
+                    <option value="StairMaster / Steps">
+                      StairMaster / Steps
+                    </option>
+                    <option value="Strength & Core">Strength & Core</option>
+                    <option value="Family Trail Walk">Family Trail Walk</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    Session Title
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g., 12% Incline Climb"
+                    value={formState.title}
+                    onChange={(e) =>
+                      setFormState({ ...formState, title: e.target.value })
+                    }
+                    className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    Date
+                  </label>
+                  <input
+                    type="date"
+                    value={formState.date}
+                    onChange={(e) =>
+                      setFormState({ ...formState, date: e.target.value })
+                    }
+                    className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-4 gap-2">
+                <div>
+                  <label className="block text-[11px] font-semibold text-slate-700 mb-1">
+                    Miles
+                  </label>
+                  <input
+                    type="number"
+                    step="0.1"
+                    min="0"
+                    value={formState.distanceMiles}
+                    onChange={(e) =>
+                      setFormState({
+                        ...formState,
+                        distanceMiles: e.target.value,
+                      })
+                    }
+                    className="w-full rounded-xl border border-slate-300 px-2.5 py-2 text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-semibold text-slate-700 mb-1">
+                    Vert (ft)
+                  </label>
+                  <input
+                    type="number"
+                    step="50"
+                    min="0"
+                    value={formState.elevationFt}
+                    onChange={(e) =>
+                      setFormState({
+                        ...formState,
+                        elevationFt: e.target.value,
+                      })
+                    }
+                    className="w-full rounded-xl border border-slate-300 px-2.5 py-2 text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-semibold text-slate-700 mb-1">
+                    Minutes
+                  </label>
+                  <input
+                    type="number"
+                    min="0"
+                    value={formState.durationMins}
+                    onChange={(e) =>
+                      setFormState({
+                        ...formState,
+                        durationMins: e.target.value,
+                      })
+                    }
+                    className="w-full rounded-xl border border-slate-300 px-2.5 py-2 text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-semibold text-slate-700 mb-1">
+                    Pack (lb)
+                  </label>
+                  <input
+                    type="number"
+                    min="0"
+                    value={formState.packWeightLbs}
+                    onChange={(e) =>
+                      setFormState({
+                        ...formState,
+                        packWeightLbs: e.target.value,
+                      })
+                    }
+                    className="w-full rounded-xl border border-slate-300 px-2.5 py-2 text-sm"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  Notes (Incline %, Trail, Boots, How Legs Felt)
+                </label>
+                <input
+                  type="text"
+                  placeholder="Optional notes..."
+                  value={formState.notes}
+                  onChange={(e) =>
+                    setFormState({ ...formState, notes: e.target.value })
+                  }
+                  className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm"
+                />
+              </div>
+
+              <label className="flex items-center gap-2 text-xs text-slate-600 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={formState.isPrivate}
+                  onChange={(e) =>
+                    setFormState({ ...formState, isPrivate: e.target.checked })
+                  }
+                  className="rounded border-slate-300 text-teal-600"
+                />
+                <span>Keep this individual workout private from the group</span>
+              </label>
+
+              <button
+                type="submit"
+                className="w-full bg-teal-600 hover:bg-teal-500 text-white font-bold py-2.5 rounded-xl text-sm shadow-sm transition cursor-pointer"
+              >
+                Save Workout
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
